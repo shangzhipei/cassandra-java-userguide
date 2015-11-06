@@ -1,0 +1,23 @@
+CREATE KEYSPACE complex
+WITH replication = {'class' : 'SimpleStrategy', 'replication_factor' :
+3};
+CREATE TYPE complex.phone (
+alias text,
+number text
+);
+CREATE TYPE complex.address (
+street text,
+city text,
+zip_code int,
+phones list<frozen<phone>>
+);
+CREATE TABLE complex.accounts (
+email text PRIMARY KEY,
+name text,
+addr frozen<address>
+);
+CREATE TABLE complex.users (
+id uuid PRIMARY KEY,
+name text,
+addresses map<text,frozen<address>>
+);
